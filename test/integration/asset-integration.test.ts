@@ -43,6 +43,18 @@ describe('Asset API - Read', () => {
     const response = await environment.getPublishedAssets()
     expect(response.items).toBeTruthy()
   })
+
+  test('Gets assets cursor', async () => {
+    const response = await environment.getAssets({ cursor: true, limit: 1 })
+    expect(response.items).toBeTruthy()
+    expect(response.pages?.next).to.be.string
+  })
+
+  test('Gets published assets cursor', async () => {
+    const response = await environment.getPublishedAssets({ cursor: true, limit: 1 })
+    expect(response.items).toBeTruthy()
+    expect(response.pages?.next).to.be.string
+  })
 })
 
 describe('Asset API - Write', { concurrent: true }, () => {

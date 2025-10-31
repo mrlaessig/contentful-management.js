@@ -491,7 +491,14 @@ type MRInternal<UA extends boolean> = {
     opts: MROpts<'AppInstallation', 'getForOrganization', UA>,
   ): MRReturn<'AppInstallation', 'getForOrganization'>
 
+
+  (
+    opts: WithCursorPagination<MROpts<'Asset', 'getMany', UA>>,
+  ): Promise<CursorPaginatedCollectionProp<EntryProps>>
   (opts: MROpts<'Asset', 'getMany', UA>): MRReturn<'Asset', 'getMany'>
+  (
+    opts: WithCursorPagination<MROpts<'Asset', 'getPublished', UA>>,
+  ): Promise<CursorPaginatedCollectionProp<EntryProps>>
   (opts: MROpts<'Asset', 'getPublished', UA>): MRReturn<'Asset', 'getPublished'>
   (opts: MROpts<'Asset', 'get', UA>): MRReturn<'Asset', 'get'>
   (opts: MROpts<'Asset', 'update', UA>): MRReturn<'Asset', 'update'>
@@ -620,6 +627,9 @@ type MRInternal<UA extends boolean> = {
     opts: WithCursorPagination<MROpts<'Entry', 'getMany', UA>>,
   ): Promise<CursorPaginatedCollectionProp<EntryProps>>
   (opts: MROpts<'Entry', 'getMany', UA>): MRReturn<'Entry', 'getMany'>
+  (
+    opts: WithCursorPagination<MROpts<'Entry', 'getPublished', UA>>,
+  ): Promise<CursorPaginatedCollectionProp<EntryProps>>
   (opts: MROpts<'Entry', 'getPublished', UA>): MRReturn<'Entry', 'getPublished'>
   (opts: MROpts<'Entry', 'get', UA>): MRReturn<'Entry', 'get'>
   (opts: MROpts<'Entry', 'patch', UA>): MRReturn<'Entry', 'patch'>

@@ -759,7 +759,7 @@ export default function createEnvironmentApi(makeRequest: MakeRequest) {
      * .catch(console.error)
      * ```
      */
-    getPublishedEntries(query: QueryOptions = {}) {
+    getPublishedEntries: withOptionalCursorApi(function (query: QueryOptions = {}) {
       const raw = this.toPlainObject() as EnvironmentProps
       return makeRequest({
         entityType: 'Entry',
@@ -770,7 +770,7 @@ export default function createEnvironmentApi(makeRequest: MakeRequest) {
           query: createRequestConfig({ query: query }).params,
         },
       }).then((data) => wrapEntryCollection(makeRequest, data))
-    },
+    }),
 
     /**
      * Creates a Entry
@@ -944,7 +944,7 @@ export default function createEnvironmentApi(makeRequest: MakeRequest) {
      * .catch(console.error)
      * ```
      */
-    getAssets(query: QueryOptions = {}) {
+    getAssets: withOptionalCursorApi(function (query: QueryOptions = {}) {
       const raw = this.toPlainObject() as EnvironmentProps
       return makeRequest({
         entityType: 'Asset',
@@ -955,7 +955,7 @@ export default function createEnvironmentApi(makeRequest: MakeRequest) {
           query: createRequestConfig({ query: query }).params,
         },
       }).then((data) => wrapAssetCollection(makeRequest, data))
-    },
+    }),
     /**
      * Gets a collection of published Assets
      * @param query - Object with search parameters. Check the <a href="https://www.contentful.com/developers/docs/javascript/tutorials/using-js-cda-sdk/#retrieving-entries-with-search-parameters">JS SDK tutorial</a> and the <a href="https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters">REST API reference</a> for more details.
@@ -974,7 +974,7 @@ export default function createEnvironmentApi(makeRequest: MakeRequest) {
      * .catch(console.error)
      * ```
      */
-    getPublishedAssets(query: QueryOptions = {}) {
+    getPublishedAssets: withOptionalCursorApi(function (query: QueryOptions = {}) {
       const raw = this.toPlainObject() as EnvironmentProps
       return makeRequest({
         entityType: 'Asset',
@@ -985,7 +985,7 @@ export default function createEnvironmentApi(makeRequest: MakeRequest) {
           query: createRequestConfig({ query: query }).params,
         },
       }).then((data) => wrapAssetCollection(makeRequest, data))
-    },
+    }),
     /**
      * Creates a Asset. After creation, call asset.processForLocale or asset.processForAllLocales to start asset processing.
      * @param data - Object representation of the Asset to be created. Note that the field object should have an upload property on asset creation, which will be removed and replaced with an url property when processing is finished.
