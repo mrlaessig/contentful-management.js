@@ -481,7 +481,7 @@ export default function createEnvironmentApi(makeRequest: MakeRequest) {
      * .catch(console.error)
      * ```
      */
-    getContentTypes(query: QueryOptions = {}) {
+    getContentTypes: withOptionalCursorApi(function (query: QueryOptions = {}) {
       const raw = this.toPlainObject() as EnvironmentProps
       return makeRequest({
         entityType: 'ContentType',
@@ -492,7 +492,7 @@ export default function createEnvironmentApi(makeRequest: MakeRequest) {
           query: createRequestConfig({ query }).params,
         },
       }).then((data) => wrapContentTypeCollection(makeRequest, data))
-    },
+    }),
     /**
      * Creates a Content Type
      * @param data - Object representation of the Content Type to be created

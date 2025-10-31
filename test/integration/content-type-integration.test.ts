@@ -51,6 +51,12 @@ describe('ContentType Api', () => {
       const response = await readEnvironment.getContentTypes()
       expect(response.items).toBeTruthy()
     })
+
+    it('Gets content types cursor', async () => {
+      const response = await readEnvironment.getContentTypes({ cursor: true, limit: 1 })
+      expect(response.items).toHaveLength(1)
+      expect(response.pages?.next).toBeTruthy()
+    })
   })
 
   describe('write', () => {

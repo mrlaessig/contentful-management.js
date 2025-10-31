@@ -494,11 +494,11 @@ type MRInternal<UA extends boolean> = {
 
   (
     opts: WithCursorPagination<MROpts<'Asset', 'getMany', UA>>,
-  ): Promise<CursorPaginatedCollectionProp<EntryProps>>
+  ): Promise<CursorPaginatedCollectionProp<AssetProps>>
   (opts: MROpts<'Asset', 'getMany', UA>): MRReturn<'Asset', 'getMany'>
   (
     opts: WithCursorPagination<MROpts<'Asset', 'getPublished', UA>>,
-  ): Promise<CursorPaginatedCollectionProp<EntryProps>>
+  ): Promise<CursorPaginatedCollectionProp<AssetProps>>
   (opts: MROpts<'Asset', 'getPublished', UA>): MRReturn<'Asset', 'getPublished'>
   (opts: MROpts<'Asset', 'get', UA>): MRReturn<'Asset', 'get'>
   (opts: MROpts<'Asset', 'update', UA>): MRReturn<'Asset', 'update'>
@@ -574,6 +574,9 @@ type MRInternal<UA extends boolean> = {
   (opts: MROpts<'ConceptScheme', 'delete', UA>): MRReturn<'ConceptScheme', 'delete'>
 
   (opts: MROpts<'ContentType', 'get', UA>): MRReturn<'ContentType', 'get'>
+  (
+    opts: WithCursorPagination<MROpts<'ContentType', 'getMany', UA>>,
+  ): Promise<CursorPaginatedCollectionProp<ConceptProps>>
   (opts: MROpts<'ContentType', 'getMany', UA>): MRReturn<'ContentType', 'getMany'>
   (opts: MROpts<'ContentType', 'update', UA>): MRReturn<'ContentType', 'update'>
   (opts: MROpts<'ContentType', 'create', UA>): MRReturn<'ContentType', 'create'>
@@ -583,6 +586,9 @@ type MRInternal<UA extends boolean> = {
   (opts: MROpts<'ContentType', 'unpublish', UA>): MRReturn<'ContentType', 'unpublish'>
 
   (opts: MROpts<'EditorInterface', 'get', UA>): MRReturn<'EditorInterface', 'get'>
+  (
+    opts: WithCursorPagination<MROpts<'EditorInterface', 'getMany', UA>>,
+  ): Promise<CursorPaginatedCollectionProp<EditorInterfaceProps>>
   (opts: MROpts<'EditorInterface', 'getMany', UA>): MRReturn<'EditorInterface', 'getMany'>
   (opts: MROpts<'EditorInterface', 'update', UA>): MRReturn<'EditorInterface', 'update'>
 
