@@ -364,6 +364,15 @@ interface CursorPaginationBase {
   limit?: number
 }
 
+export type OptionalCursorApi<P, T, TPlain> = {
+  (
+    query: P & CursorBasedParams['query'] & { cursor: true; skip?: never },
+  ): Promise<CursorPaginatedCollection<T, TPlain>>
+  (query?: P & { cursor?: false | undefined | never }): Promise<Collection<T, TPlain>>
+  (query?: P): Promise<Collection<T, TPlain>>
+}
+
+type WithCursorPagination<O> = O & { params: { query: { cursor: true } } }
 // Interfaces for each “exclusive” shape
 interface CursorPaginationPageNext extends CursorPaginationBase {
   pageNext: string
@@ -607,6 +616,9 @@ type MRInternal<UA extends boolean> = {
     opts: MROpts<'EnvironmentTemplateInstallation', 'getForEnvironment', UA>,
   ): MRReturn<'EnvironmentTemplateInstallation', 'getForEnvironment'>
 
+  (
+    opts: WithCursorPagination<MROpts<'Entry', 'getMany', UA>>,
+  ): Promise<CursorPaginatedCollectionProp<EntryProps>>
   (opts: MROpts<'Entry', 'getMany', UA>): MRReturn<'Entry', 'getMany'>
   (opts: MROpts<'Entry', 'getPublished', UA>): MRReturn<'Entry', 'getPublished'>
   (opts: MROpts<'Entry', 'get', UA>): MRReturn<'Entry', 'get'>

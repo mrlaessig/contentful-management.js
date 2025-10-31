@@ -78,6 +78,15 @@ describe('Entry Api', () => {
         })
     })
 
+    test('Gets entries with a cursor parameter', async () => {
+      return environment.getEntries({ cursor: true, limit: 1  }).then(async (response) => {
+        expect(response.items, 'items').ok
+        expect(response.items).lengthOf(1)
+        expect(response.items).lengthOf(1)
+        expect(response.pages?.next).to.be.string
+      })
+    })
+
     test('Gets entries with a skip parameter', async () => {
       return environment
         .getEntries({
