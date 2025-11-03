@@ -6,8 +6,10 @@ import {
   generateRandomId,
   getDefaultSpace,
   timeoutToCalmRateLimiting,
+  initPlainClient,
 } from '../helpers'
-import type { Environment, ContentType, Space } from '../../lib/export-types'
+import type { Environment, ContentType, Space, PlainClientAPI } from '../../lib/export-types'
+import { TestDefaults } from '../defaults'
 
 describe('ContentType Api', () => {
   let readSpace: Space
@@ -140,6 +142,24 @@ describe('ContentType Api', () => {
       expect(contentType.name).toBe('testentitywithid')
 
       await contentType.delete()
+    })
+  })
+
+  describe('read plainClientApi', () => {
+    const createEntryClient = initPlainClient({
+      environmentId: TestDefaults.environmentId,
+      spaceId: TestDefaults.spaceId,
+    })
+
+    describe('read', () => {
+      it('getMany cursor', async () => {
+        const response = await createEntryClient.contentType.getMany({
+          query: { cursor: true, limit: 1 },
+        })
+
+        expect(response.items).toHaveLength(1)
+        expect(response.pages?.next).toBeTruthy()
+      })
     })
   })
 })

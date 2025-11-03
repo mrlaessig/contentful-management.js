@@ -254,6 +254,9 @@ export type PlainClientAPI = {
   contentType: {
     get(params: OptionalDefaults<GetContentTypeParams & QueryParams>): Promise<ContentTypeProps>
     getMany(
+      params: WithCursorBasedPagination<OptionalDefaults<GetSpaceEnvironmentParams & QueryParams>>,
+    ): Promise<CursorPaginatedCollectionProp<ContentTypeProps>>
+    getMany(
       params: OptionalDefaults<GetSpaceEnvironmentParams & QueryParams>,
     ): Promise<CollectionProp<ContentTypeProps>>
     update(
@@ -361,10 +364,22 @@ export type PlainClientAPI = {
   }
   asset: {
     getPublished(
+      params: WithCursorBasedPagination<OptionalDefaults<GetSpaceEnvironmentParams & QueryParams>>,
+      rawData?: unknown,
+      headers?: RawAxiosRequestHeaders,
+    ): Promise<CursorPaginatedCollectionProp<AssetProps>>
+    getPublished(
       params: OptionalDefaults<GetSpaceEnvironmentParams & QueryParams>,
       rawData?: unknown,
       headers?: RawAxiosRequestHeaders,
     ): Promise<CollectionProp<AssetProps>>
+    getMany(
+      params: WithCursorBasedPagination<
+        OptionalDefaults<GetSpaceEnvironmentParams & QueryParams & { releaseId?: string }>
+      >,
+      rawData?: unknown,
+      headers?: RawAxiosRequestHeaders,
+    ): Promise<CursorPaginatedCollectionProp<AssetProps>>
     getMany(
       params: OptionalDefaults<GetSpaceEnvironmentParams & QueryParams & { releaseId?: string }>,
       rawData?: unknown,

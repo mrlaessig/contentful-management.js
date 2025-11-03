@@ -1,5 +1,4 @@
 import type {
-  CursorPaginatedCollectionProp,
   MakeRequest,
   MRActions,
   MRReturn,
@@ -34,44 +33,11 @@ export type WrapParams = {
 /**
  * @private
  */
-export type WrapFn<
-  ET extends keyof MRActions,
-  Action extends keyof MRActions[ET],
-  Params = 'params' extends keyof MRActions[ET][Action]
-    ? MRActions[ET][Action]['params']
-    : undefined,
-  Payload = 'payload' extends keyof MRActions[ET][Action]
-    ? MRActions[ET][Action]['payload']
-    : undefined,
-  Headers = 'headers' extends keyof MRActions[ET][Action]
-    ? MRActions[ET][Action]['headers']
-    : undefined,
-  Return = MRReturn<ET, Action>,
-> = Params extends undefined
-  ? () => Return
-  : Payload extends undefined
-    ? (params: Params) => Return
-    : Headers extends undefined
-      ? (params: Params, payload: Payload) => Return
-      : (params: Params, payload: Payload, headers: Headers) => Return
-
-/**
- * @private
- */
-export function wrap<ET extends keyof MRActions, Action extends keyof MRActions[ET], T>(
+export function wrap<ET extends keyof MRActions, Action extends keyof MRActions[ET], A extends unknown[]>(
   { makeRequest, defaults }: WrapParams,
   entityType: ET,
   action: Action,
-): (
-  params: 'params' extends keyof MRActions[ET][Action]
-    ? MRActions[ET][Action]['params'] & { query: { cursor: true } }
-    : undefined,
-) => Promise<T>;
-export function wrap<ET extends keyof MRActions, Action extends keyof MRActions[ET]>(
-  { makeRequest, defaults }: WrapParams,
-  entityType: ET,
-  action: Action,
-): WrapFn<ET, Action> {
+): (...args: A) => MRReturn<ET, Action> {
   type Params = 'params' extends keyof MRActions[ET][Action]
     ? MRActions[ET][Action]['params']
     : never
