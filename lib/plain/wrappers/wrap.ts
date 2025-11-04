@@ -1,8 +1,4 @@
-import type {
-  MakeRequest,
-  MRActions,
-  MRReturn,
-} from '../../common-types'
+import type { MakeRequest, MRActions, MRReturn } from '../../common-types'
 
 export type DefaultParams = {
   spaceId?: string
@@ -33,11 +29,35 @@ export type WrapParams = {
 /**
  * @private
  */
-export function wrap<ET extends keyof MRActions, Action extends keyof MRActions[ET], A extends unknown[]>(
+export type WrapFn<
+  ET extends keyof MRActions,
+  Action extends keyof MRActions[ET],
+  Params = 'params' extends keyof MRActions[ET][Action]
+    ? MRActions[ET][Action]['params']
+    : undefined,
+  Payload = 'payload' extends keyof MRActions[ET][Action]
+    ? MRActions[ET][Action]['payload']
+    : undefined,
+  Headers = 'headers' extends keyof MRActions[ET][Action]
+    ? MRActions[ET][Action]['headers']
+    : undefined,
+  Return = MRReturn<ET, Action>,
+> = Params extends undefined
+  ? () => Return
+  : Payload extends undefined
+    ? (params: Params) => Return
+    : Headers extends undefined
+      ? (params: Params, payload: Payload) => Return
+      : (params: Params, payload: Payload, headers: Headers) => Return
+
+/**
+ * @private
+ */
+export const wrap = <ET extends keyof MRActions, Action extends keyof MRActions[ET]>(
   { makeRequest, defaults }: WrapParams,
   entityType: ET,
   action: Action,
-): (...args: A) => MRReturn<ET, Action> {
+): WrapFn<ET, Action> => {
   type Params = 'params' extends keyof MRActions[ET][Action]
     ? MRActions[ET][Action]['params']
     : never
